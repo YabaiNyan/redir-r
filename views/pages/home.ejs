@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head.ejs %>
+    <% include ../partials/homecss.ejs %>
+</head>
+
+<body class="index-page sidebar-collapse">
+    <% include ../partials/nav.ejs %>
+
+    <div class="wrapper">
+        <div class="page-header clear-filter" filter-color="orange">
+            <div class="page-header-image" data-parallax="true" style="background-image: url(&quot;./assets/img/header.jpg&quot;); transform: translate3d(0px, 0px, 0px);">
+            </div>
+            <div class="container" id="brand-container">
+                <div class="content-center brand">
+                    <img class="n-logo" src="./assets/img/now-logo.png" alt="">
+                    <h1 class="h1-seo">Redir</h1>
+                    <h3>Another URL Shortener.</h3>
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="form-control"  value="" placeholder="Paste link here to shorten" id="link-input">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="now-ui-icons ui-1_send"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section section-nucleo-icons">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <h2 class="title">Project RedirR</h2>
+                        <h5 class="description">
+                            A Simple Link Redirection Project.
+                            For Simple Link Redirection Needs.
+                        </h5>
+                        <a href="/" class="btn btn-primary btn-round btn-lg" target="_blank">
+                            View Source Code
+                        </a>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12">
+                        <div class="icons-container">
+                            <i class="now-ui-icons ui-1_send"></i>
+                            <i class="now-ui-icons ui-2_like"></i>
+                            <i class="now-ui-icons transportation_air-baloon"></i>
+                            <i class="now-ui-icons text_bold"></i>
+                            <i class="now-ui-icons tech_headphones"></i>
+                            <i class="now-ui-icons emoticons_satisfied"></i>
+                            <i class="now-ui-icons shopping_cart-simple"></i>
+                            <i class="now-ui-icons objects_spaceship"></i>
+                            <i class="now-ui-icons media-2_note-03"></i>
+                            <i class="now-ui-icons ui-2_favourite-28"></i>
+                            <i class="now-ui-icons design_palette"></i>
+                            <i class="now-ui-icons clothes_tie-bow"></i>
+                            <i class="now-ui-icons location_pin"></i>
+                            <i class="now-ui-icons objects_key-25"></i>
+                            <i class="now-ui-icons travel_istanbul"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include ../partials/js.ejs %>
+</body>
+
+</html>

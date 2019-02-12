@@ -1,0 +1,28 @@
+{
+  "name": "sqlite-3-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YabaiNyan/sqlite-3-learning.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YabaiNyan/sqlite-3-learning/issues"
+  },
+  "homepage": "https://github.com/YabaiNyan/sqlite-3-learning#readme",
+  "dependencies": {
+    "@keyv/sqlite": "^2.0.0",
+    "dotenv": "^6.2.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-ws": "^4.0.0",
+    "keyv": "^3.1.0",
+    "sqlite3": "^4.0.6"
+  }
+}

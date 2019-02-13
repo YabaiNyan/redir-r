@@ -74,11 +74,11 @@
 
     $("#link-input").keydown(function(e){
         if(e.which == 13) {
-            ws.send($("#link-input").val())
+            ws.send($("#link-input").val().trim())
         }
     })
 
     function sendLink(){
-        ws.send($("#link-input").val())
+        ws.send($("#link-input").val().trim())
     }
 </script>

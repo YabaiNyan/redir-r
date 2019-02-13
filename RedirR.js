@@ -37,12 +37,26 @@ var expressWs = require('express-ws')(app);
 app.set('view engine', 'ejs');
 
 const Keyv = require('keyv');
-const idDB = new Keyv('sqlite://' + __dirname + '/idDB.sqlite');
-const domainDB = new Keyv('sqlite://' + __dirname + '/domainDB.sqlite');
+const idDB = new Keyv('sqlite://' + __dirname + '/RedirRDB.sqlite', {namespace : 'id'});
+const domainDB = new Keyv('sqlite://' + __dirname + '/RedirRDB.sqlite', {namespace : 'domain'});
+const adminDB = new Keyv('sqlite://' + __dirname + '/RedirRDB.sqlite', {namespace : 'admin'});
 
 idDB.on('error', (err) => {console.log(err)});
 domainDB.on('error', (err) => {console.log(err)});
+adminDB.on('error', (err) => {console.log(err)});
 
+// url regex
+const urlRegex = /^(https?:\/\/(www\.)?)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
+
+// set totalIDs if doesnt exist
+adminDB.get('totalIDs')
+    .then((totalIDs)=>{
+        if(totalIDs == undefined){
+            adminDB.set('totalIDs', 0)
+        }
+    })
+
+// reply to index
 var homeHandler = function (req, res) {
     res.render('pages/home', {domain : homedomain, ishttps})
 }
@@ -53,14 +67,29 @@ var dbHandler = function (req, res) {
 }
 */
 
+// reply to websockets
 var dbWsHandler = function (ws, req) {
     ws.on('message', function (msg) {
+        msg = msg.trim()
+        if(msg.length < 1){
+            ws.send("err://1:emptystring")
+            return
+        }
+        if(!msg.match(urlRegex)){
+            ws.send("err://2:noturl")
+            return
+        }
         idDB.get(msg)
             .then((data) => {
                 if (data == undefined) {
                     var newShortid = shortid.generate()
                     idDB.set(msg, newShortid)
                     domainDB.set(newShortid, msg)
+                    adminDB.get('totalIDs')
+                        .then((totalIDs)=>{
+                            adminDB.set('totalIDs', totalIDs + 1)
+                            adminDB.set(totalIDs + 1, newShortid)
+                        })
                     url = https + redirdomain + '/' + newShortid;
                     ws.send(url)
                 } else {
@@ -76,10 +105,8 @@ var dbWsHandler = function (ws, req) {
 
 var shortlinkHandler = function (req, res) {
     var linkID = req.params.linkID
-    console.log(linkID)
     domainDB.get(linkID)
         .then((data) => {
-            console.log(data)
             if (data != undefined) {
                 if(data.startsWith("http://") || data.startsWith("https://")){
                     res.redirect(data);

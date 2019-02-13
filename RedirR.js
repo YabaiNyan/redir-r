@@ -108,7 +108,7 @@ var redirectHome = function (req, res) {
 
 
 // ws handler
-app.ws('/ws/', dbWsHandler)
+app.ws('/', dbWsHandler)
 
 // Home page
 app.get('/', homeHandler)

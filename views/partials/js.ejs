@@ -30,6 +30,9 @@
         $('#rLink').val(e.data);
         $('#linkModal').modal()
     };
+    ws.onclose = function () {
+        console.log("ws connection has been closed")
+    }
     function fallbackCopyTextToClipboard(text) {
         var textArea = document.createElement("textarea");
         textArea.value = text;

@@ -9,8 +9,10 @@ if (process.env.URLPORT != undefined) {
     urlport = process.env.URLPORT
 }
 var https = 'http://'
+var ishttps = false
 if (process.env.HTTPS == 'true') {
     https = 'https://'
+    var ishttps = true
 }
 var redirdomain = 'localhost'
 if (process.env.REDIRDOMAIN != undefined) {
@@ -42,7 +44,7 @@ idDB.on('error', (err) => {console.log(err)});
 domainDB.on('error', (err) => {console.log(err)});
 
 var homeHandler = function (req, res) {
-    res.render('pages/home', {domain : homedomain})
+    res.render('pages/home', {domain : homedomain, ishttps})
 }
 
 /*

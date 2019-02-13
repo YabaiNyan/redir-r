@@ -21,7 +21,7 @@
 
 <script>
     var closePopover
-    var ws = new WebSocket("ws://<%= domain %>/");
+    var ws = new WebSocket("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/");
     ws.onopen = function() {
         console.log("ws connection established")
     };

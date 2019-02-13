@@ -42,7 +42,7 @@ idDB.on('error', (err) => {console.log(err)});
 domainDB.on('error', (err) => {console.log(err)});
 
 var homeHandler = function (req, res) {
-    res.render('pages/home')
+    res.render('pages/home', {domain : homedomain})
 }
 
 /*
@@ -108,7 +108,7 @@ var redirectHome = function (req, res) {
 
 
 // ws handler
-app.ws('/', dbWsHandler)
+app.ws('/ws/', dbWsHandler)
 
 // Home page
 app.get('/', homeHandler)

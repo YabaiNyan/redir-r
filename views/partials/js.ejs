@@ -21,7 +21,7 @@
 
 <script>
     var closePopover
-    var ws = new WebSocket("ws://localhost/");
+    var ws = new WebSocket("ws://<%= domain %>/ws/");
     ws.onopen = function() {
         console.log("ws connection established")
     };

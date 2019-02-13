@@ -24,7 +24,7 @@
                             <div class="input-group">
                                 <input type="text" class="form-control" value="" placeholder="Paste link here to shorten"
                                     id="link-input">
-                                <div class="input-group-append" data-toggle="modal" data-target="#linkModal">
+                                <div onclick="sendLink()" class="input-group-append">
                                     <span class="input-group-text"><i class="now-ui-icons ui-1_send"></i></span>
                                 </div>
                             </div>
@@ -80,15 +80,15 @@
                     </button>
                     <h4 class="title title-up">&lt;R&gt;link</h4>
                 </div>
-                <div class="modal-body">
-                    <p>
+                <div class="modal-body text-center">
+                    <p>Press share icon to copy
                         <div class="row">
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input type="text" class="form-control modal-input" value="" placeholder="Loading..." disabled>
+                                    <input id="rLink" type="text" class="form-control modal-input" value="meme" placeholder="Loading..." disabled>
                                     <div class="input-group-append">
-                                        <span class="input-group-text modal-input"><i class="now-ui-icons arrows-1_share-66"></i></span>
+                                        <span id="popover" onclick="copy('#rLink')" data-container="body" data-content="Link has been copied" data-placement="top" aria-describedby="popover985178" class="input-group-text modal-input"><i class="now-ui-icons arrows-1_share-66"></i></span>
                                     </div>
                                 </div>
                             </div>

@@ -9,11 +9,73 @@
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
 <script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
 
-<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker --><script src="../assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
+<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+<script src="../assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
 
 <!--  Google Maps Plugin    -->
-<!---->script  src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script-->
+<!---->script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script-->
 
 
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="/assets/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
+
+<script>
+    var closePopover
+    var ws = new WebSocket("ws://localhost/");
+    ws.onopen = function() {
+        console.log("ws connection established")
+    };
+    ws.onmessage = function (e) { 
+        console.log(e.data)
+        $('#rLink').val(e.data);
+        $('#linkModal').modal()
+    };
+    function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Fallback: Copying text command was ' + msg);
+        } catch (err) {
+            console.error('Fallback: Oops, unable to copy', err);
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    function copyTextToClipboard(text) {
+        if (!navigator.clipboard) {
+            fallbackCopyTextToClipboard(text);
+            return;
+        }
+        navigator.clipboard.writeText(text).then(function () {
+            console.log('Async: Copying to clipboard was successful!');
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }
+
+    function copy(ele) {
+        clearTimeout(closePopover);
+        $('#popover').popover('show');
+        closePopover = setTimeout(function(){
+            $('#popover').popover('hide');
+        }, 2000)
+        copyTextToClipboard($(ele).val());
+    }
+
+    $("#link-input").keydown(function(e){
+        if(e.which == 13) {
+            ws.send($("#link-input").val())
+        }
+    })
+
+    function sendLink(){
+        ws.send($("#link-input").val())
+    }
+</script>

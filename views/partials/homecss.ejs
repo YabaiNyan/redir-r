@@ -18,11 +18,14 @@
     z-index: -1000;
 }
 .modal.fade.show{
-    z-index: 2000;
+    z-index: 1050;
 }
 
 .modal-input.input-group-text{
     background-color: #fff;
+    border-right-color: #f96332 !important;
+    border-bottom-color: #f96332;
+    border-top-color: #f96332;
 }
 .modal-input.form-control{
     background-color: #fff;
@@ -30,5 +33,22 @@
 
 .form-control.modal-input[disabled]{
     cursor: default;
+    border-right: 0 none;
+    border-right-width: 0px;
+    border-right-style: none;
+    border-right-color: initial;
+    border-left-color: #f96332;
+    border-bottom-color: #f96332;
+    border-top-color: #f96332;
+}
+
+div.cover{
+    top: 0;
+    right: 0;
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    width: 100vw;
+    height: 100vh;
 }
 </style>

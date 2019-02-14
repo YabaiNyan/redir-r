@@ -46,7 +46,7 @@ domainDB.on('error', (err) => {console.log(err)});
 adminDB.on('error', (err) => {console.log(err)});
 
 // url regex
-const urlRegex = /^(https?:\/\/(www\.)?)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
+const urlRegex = /^(https?:\/\/(www\.)?)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,24}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
 
 // set totalIDs if doesnt exist
 adminDB.get('totalIDs')

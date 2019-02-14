@@ -8,7 +8,19 @@
 
 <body class="index-page sidebar-collapse">
     <% include ../partials/nav.ejs %>
-
+    <div class="alert alert-danger" role="alert" id='alertDiv'>
+        <div class="container">
+            <div class="alert-icon">
+                <i class="now-ui-icons objects_support-17"></i>
+            </div>
+            <strong>Oh snap!</strong> <span id="errorMsg">Something Went Wrong</span>
+            <button type="button" class="close" onclick="closeAlert()" aria-label="Close">
+                <span aria-hidden="true">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                </span>
+            </button>
+        </div>
+    </div>
     <div class="wrapper">
         <div class="page-header clear-filter" filter-color="orange">
             <div class="page-header-image" data-parallax="true" style="background-image: url(&quot;./assets/img/header.jpg&quot;); transform: translate3d(0px, 0px, 0px);">
@@ -43,7 +55,7 @@
                             A Simple Link Redirection Project.
                             For Simple Link Redirection Needs.
                         </h5>
-                        <a href="/" class="btn btn-primary btn-round btn-lg" target="_blank">
+                        <a href="https://github.com/YabaiNyan/redir-r" class="btn btn-primary btn-round btn-lg" target="_blank">
                             View Source Code
                         </a>
                     </div>
@@ -86,9 +98,12 @@
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input id="rLink" type="text" class="form-control modal-input" value="meme" placeholder="Loading..." disabled>
+                                    <input id="rLink" type="text" class="form-control modal-input" value="meme"
+                                        placeholder="Loading..." disabled>
                                     <div class="input-group-append">
-                                        <span id="popover" onclick="copy('#rLink')" data-container="body" data-content="Link has been copied" data-placement="top" aria-describedby="popover985178" class="input-group-text modal-input"><i class="now-ui-icons arrows-1_share-66"></i></span>
+                                        <span id="popover" onclick="copy('#rLink')" data-container="body" data-content="Link has been copied"
+                                            data-placement="top" aria-describedby="popover985178" class="input-group-text modal-input"><i
+                                                class="now-ui-icons arrows-1_share-66"></i></span>
                                     </div>
                                 </div>
                             </div>

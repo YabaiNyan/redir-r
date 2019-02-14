@@ -20,19 +20,9 @@
 <script src="/assets/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
 
 <script>
-    var closePopover
-    var ws = new WebSocket("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/");
-    ws.onopen = function() {
-        console.log("ws connection established")
-    };
-    ws.onmessage = function (e) { 
-        console.log(e.data)
-        $('#rLink').val(e.data);
-        $('#linkModal').modal()
-    };
-    ws.onclose = function () {
-        console.log("ws connection has been closed")
-    }
+    var closePopover;
+    start("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/");
+
     function fallbackCopyTextToClipboard(text) {
         var textArea = document.createElement("textarea");
         textArea.value = text;
@@ -66,19 +56,63 @@
     function copy(ele) {
         clearTimeout(closePopover);
         $('#popover').popover('show');
-        closePopover = setTimeout(function(){
+        closePopover = setTimeout(function () {
             $('#popover').popover('hide');
         }, 2000)
         copyTextToClipboard($(ele).val());
     }
 
-    $("#link-input").keydown(function(e){
-        if(e.which == 13) {
+    $("#link-input").keydown(function (e) {
+        if (e.which == 13) {
             ws.send($("#link-input").val().trim())
         }
     })
 
-    function sendLink(){
+    function sendLink() {
         ws.send($("#link-input").val().trim())
+    }
+
+    function displayErr(err) {
+        $('#errorMsg').html(err)
+        $('#alertDiv').show()
+    }
+
+    function closeAlert() {
+        $('#alertDiv').hide()
+    }
+
+    function start(websocketServerLocation) {
+        ws = new WebSocket(websocketServerLocation);
+        ws.onopen = function () {
+            console.log("ws connection established")
+        };
+        ws.onmessage = function (e) {
+            if (e.data.startsWith('err://')) {
+                var errcode = e.data.split('err://')[1].split(':')[0];
+                switch (errcode) {
+                    case '1':
+                        displayErr("The link you have provided is empty!")
+                        return
+                        break
+                    case '2':
+                        displayErr("RedirR can only sorten valid links!")
+                        return
+                        break
+                    default:
+                        displayErr("An unknown error has occured")
+                        return
+                        break
+                }
+            }
+            closeAlert();
+            $('#rLink').val(e.data);
+            $('#linkModal').modal()
+        };
+        ws.onclose = function () {
+            console.log("ws connection has been closed");
+            setTimeout(function () {
+                start(websocketServerLocation)
+            }, 5000);
+        };
     }
 </script>

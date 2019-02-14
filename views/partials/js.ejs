@@ -12,15 +12,13 @@
 <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
 <script src="../assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
 
-<!--  Google Maps Plugin    -->
-<!---->script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script-->
-
-
 <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
 <script src="/assets/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
 
 <script>
     var closePopover;
+    var keyArr = [];
+    const matchArr = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
     start("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/");
 
     function fallbackCopyTextToClipboard(text) {
@@ -114,5 +112,25 @@
                 start(websocketServerLocation)
             }, 5000);
         };
+    }
+
+    $('#source-code').keydown(function (e) {
+        keyArr.push(e.which);
+        if (keyArr.length > matchArr.length) {
+            keyArr.shift();
+        }
+        if (arraysEqual(keyArr, matchArr)) {
+            location.href = "<% if(ishttps){ %>https://<% }else{ %>http://<% } %><%= domain %>/admin/";
+        }
+    })
+
+    function arraysEqual(arr1, arr2) {
+        if (arr1.length !== arr2.length)
+            return false;
+        for (var i = arr1.length; i--;) {
+            if (arr1[i] !== arr2[i])
+                return false;
+        }
+        return true;
     }
 </script>

@@ -19,7 +19,7 @@
     var closePopover;
     var keyArr = [];
     var ws;
-    start("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/admin/");
+    start("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/admin/register/");
 
     $("#loginForm").submit(function(e){
         e.preventDefault()
@@ -67,9 +67,6 @@
         ws = new WebSocket(websocketServerLocation);
         ws.onopen = function () {
             console.log("ws connection established")
-            if(getCookie('uuid') != undefined){
-                ws.send("uuid://"+getCookie('uuid'))
-            }
         };
         ws.onmessage = function (e) {
             if (e.data.startsWith('err://')) {
@@ -77,17 +74,7 @@
                 var errcode = e.data.split('err://')[1].split(':')[0];
                 handleErr(errcode)
             }else{
-                if(e.data.startsWith("token://")){
-                    var token = e.data.split("://")
-                    token.shift()
-                    token = token.join("://")
-                    setCookie('uuid', token, 1)
-                    ws.send("uuid://"+getCookie('uuid'))
-                }else if(e.data == "auth://valid"){
-                    location.href = "/admin/home/"
-                }else{
-                    console.log(e.data)
-                }
+                location.href = '/admin/'
             }
         };
         ws.onclose = function () {
@@ -97,32 +84,6 @@
             }, 3000);
         };
     }
-
-    //cookie handler functions
-    function setCookie(name,value,days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days*24*60*60*1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-    }
-
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for(var i=0;i < ca.length;i++) {
-            var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-        }
-        return null;
-    }
-
-    function eraseCookie(name) {   
-        document.cookie = name+'=; Max-Age=-99999999;';  
-    }
-
-    <% include ../partials/handleErrJS.ejs %>
+    
+    <% include ../handleErrJS.ejs %>
 </script>

@@ -89,10 +89,11 @@
                 console.log(e.data)
                 var errcode = e.data.split('err://')[1].split(':')[0];
                 handleErr(errcode)
+            }else{
+                closeAlert();
+                $('#rLink').val(e.data);
+                $('#linkModal').modal()
             }
-            closeAlert();
-            $('#rLink').val(e.data);
-            $('#linkModal').modal()
         };
         ws.onclose = function () {
             console.log("ws connection has been closed");
@@ -122,5 +123,5 @@
         return true;
     }
     
-    <% include ../partials/handleErrJS.ejs %>
+    <% include ../handleErrJS.ejs %>
 </script>

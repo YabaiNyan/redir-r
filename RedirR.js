@@ -84,7 +84,7 @@ var adminWsHandler = function (ws, req) {
             adminTokensDB.get(uuid)
                 .then((user) => {
                     if(user == undefined){
-                        ws.send("err://5:uuidInvalid")
+                        ws.send("err://8:uuidInvalid")
                     }else{
                         switch(command){
                             case '1':
@@ -99,13 +99,13 @@ var adminWsHandler = function (ws, req) {
             loginObj = JSON.parse(msg)
             if(loginObj.username == "" || loginObj.password == ""){
                 if(loginObj.username == "" && loginObj.password == "" ){
-                    ws.send("err://4:username&passwordEmpty")
+                    ws.send("err://6:username&passwordEmpty")
                 }else{
                     if(loginObj.username == ""){
-                        ws.send("err://3:usernameEmpty")
+                        ws.send("err://5:usernameEmpty")
                     }
                     else if(loginObj.password == ""){
-                        ws.send("err://2:passwordEmpty")
+                        ws.send("err://4:passwordEmpty")
                     }
                 }
             }else{
@@ -114,7 +114,7 @@ var adminWsHandler = function (ws, req) {
                         if(hash != undefined){
                             bcrypt.compare(loginObj.password, hash, function(err, res) {
                                 if(res == false){
-                                    ws.send("err://1:incorrectlogin")
+                                    ws.send("err://3:incorrectlogin")
                                 }else{
                                     uidgen.generate()
                                     .then(token => {
@@ -125,7 +125,7 @@ var adminWsHandler = function (ws, req) {
                                 }
                             });
                         }else{
-                            ws.send("err://1:incorrectlogin")
+                            ws.send("err://3:incorrectlogin")
                         }
                     })
             }
@@ -147,13 +147,13 @@ var adminRegisterWsHandler = function (ws, req) {
         loginObj = JSON.parse(msg)
         if(loginObj.username == "" || loginObj.password == ""){
             if(loginObj.username == "" && loginObj.password == "" ){
-                ws.send("err://4:username&passwordEmpty")
+                ws.send("err://6:username&passwordEmpty")
             }else{
                 if(loginObj.username == ""){
-                    ws.send("err://3:usernameEmpty")
+                    ws.send("err://5:usernameEmpty")
                 }
                 else if(loginObj.password == ""){
-                    ws.send("err://2:passwordEmpty")
+                    ws.send("err://4:passwordEmpty")
                 }
             }
         }else{
@@ -166,7 +166,7 @@ var adminRegisterWsHandler = function (ws, req) {
                                 ws.send("success")
                             });
                         }else[
-                            ws.send('err://5:usernameinuse')
+                            ws.send('err://7:usernameinuse')
                         ]
                     })
             }else{

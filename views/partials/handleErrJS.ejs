@@ -1,0 +1,32 @@
+function handleErr(errcode){
+    switch (errcode) {
+        case '1':
+            displayErr("The link you have provided is empty!")
+            return
+        case '2':
+            displayErr("RedirR can only sorten valid links!")
+            return
+        case '3':
+            displayErr("The username/password was incorrect")
+            return
+        case '4':
+            displayErr("The password field is empty")
+            return
+        case '5':
+            displayErr("The username field is empty")
+            return
+        case '6':
+            displayErr("The username and password fields are empty")
+            return
+        case '7':
+            displayErr("That username is already in use")
+            return
+        case '8':
+            eraseCookie('uuid')
+            displayErr("You have been automatically logged out")
+            return
+        default:
+            displayErr("An unknown error has occured")
+            return
+    }
+}

@@ -86,21 +86,9 @@
         };
         ws.onmessage = function (e) {
             if (e.data.startsWith('err://')) {
+                console.log(e.data)
                 var errcode = e.data.split('err://')[1].split(':')[0];
-                switch (errcode) {
-                    case '1':
-                        displayErr("The link you have provided is empty!")
-                        return
-                        break
-                    case '2':
-                        displayErr("RedirR can only sorten valid links!")
-                        return
-                        break
-                    default:
-                        displayErr("An unknown error has occured")
-                        return
-                        break
-                }
+                handleErr(errcode)
             }
             closeAlert();
             $('#rLink').val(e.data);
@@ -133,4 +121,6 @@
         }
         return true;
     }
+    
+    <% include ../partials/handleErrJS.ejs %>
 </script>

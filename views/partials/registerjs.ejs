@@ -70,33 +70,9 @@
         };
         ws.onmessage = function (e) {
             if (e.data.startsWith('err://')) {
+                console.log(e.data)
                 var errcode = e.data.split('err://')[1].split(':')[0];
-                switch (errcode) {
-                    case '1':
-                        displayErr("The username/password was incorrect")
-                        return
-                        break
-                    case '2':
-                        displayErr("The password field is empty")
-                        return
-                        break
-                    case '3':
-                        displayErr("The username field is empty")
-                        return
-                        break
-                    case '4':
-                        displayErr("The username and password fields are empty")
-                        return
-                        break
-                    case '5':
-                        displayErr("That username is already in use")
-                        return
-                        break
-                    default:
-                        displayErr("An unknown error has occured")
-                        return
-                        break
-                }
+                handleErr(errcode)
             }else{
                 location.href = '/admin/'
             }
@@ -108,4 +84,6 @@
             }, 3000);
         };
     }
+    
+    <% include ../partials/handleErrJS.ejs %>
 </script>

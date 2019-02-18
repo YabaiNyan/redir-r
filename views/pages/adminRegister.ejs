@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head.ejs %>
+    <% include ../partials/admincss.ejs %>
+</head>
+
+<body class="index-page sidebar-collapse">
+    <% include ../partials/nav.ejs %>
+    <div class="alert alert-danger" role="alert" id='alertDiv'>
+        <div class="container">
+            <div class="alert-icon">
+                <i class="now-ui-icons objects_support-17"></i>
+            </div>
+            <strong>Oh snap!</strong> <span id="errorMsg">Something Went Wrong</span>
+            <button type="button" class="close" onclick="closeAlert()" aria-label="Close">
+                <span aria-hidden="true">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="page-header clear-filter" filter-color="orange">
+            <div class="page-header-image" data-parallax="true">
+            </div>
+            <div class="container" id="brand-container">
+                <div class="content-center brand">
+                    <div class="row">
+                        <div class="card card-signup" data-background-color="orange">
+                            <form id="loginForm" class="form">
+                                <div class="card-header text-center">
+                                    <h3 class="card-title title-up">Admin Register</h3>
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="input-group no-border">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="now-ui-icons users_circle-08"></i>
+                                            </span>
+                                        </div>
+                                        <input id="username-field" type="text" class="form-control" placeholder="Username">
+                                    </div>
+
+                                    <div class="input-group no-border">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="now-ui-icons text_caps-small"></i>
+                                            </span>
+                                        </div>
+                                        <input id="password-field" type="password" placeholder="Password" class="form-control">
+                                    </div>
+
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button class="btn btn-neutral btn-round btn-lg">Login</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/registerjs.ejs %>
+</body>
+
+</html>

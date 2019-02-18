@@ -1,0 +1,111 @@
+<!--   Core JS Files   -->
+<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="/assets/js/plugins/bootstrap-switch.js"></script>
+
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+
+<!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+<script src="../assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
+
+<!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+<script src="/assets/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
+
+<script>
+    var closePopover;
+    var keyArr = [];
+    var ws;
+    start("<% if(ishttps){ %>wss://<% }else{ %>ws://<% } %><%= domain %>/admin/register/");
+
+    $("#loginForm").submit(function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        formSubmit()
+    })
+
+    function formSubmit(){
+        var username = $("#username-field").val().trim()
+        var password = $("#password-field").val()
+        if(username == "" || password == ""){
+            var loginErrs = []
+            var plural = ''
+            var isAre = 'is'
+            if(username == ""){loginErrs.push("username")}
+            if(password == ""){loginErrs.push("password")}
+            if(loginErrs.length > 1){
+                plural = 's'
+                isAre = 'are'
+            }
+            displayErr("The " + loginErrs.join(" and ") + " field" + plural + " " + isAre + " empty")
+            return
+        }
+        var loginObj = {username, password}
+        ws.send(JSON.stringify(loginObj))
+        username = '';
+        password = '';
+        loginObj = '';
+    }
+
+    function sendLink() {
+        ws.send($("#link-input").val().trim())
+    }
+
+    function displayErr(err) {
+        $('#errorMsg').html(err)
+        $('#alertDiv').show()
+    }
+
+    function closeAlert() {
+        $('#alertDiv').hide()
+    }
+
+    function start(websocketServerLocation) {
+        ws = new WebSocket(websocketServerLocation);
+        ws.onopen = function () {
+            console.log("ws connection established")
+        };
+        ws.onmessage = function (e) {
+            if (e.data.startsWith('err://')) {
+                var errcode = e.data.split('err://')[1].split(':')[0];
+                switch (errcode) {
+                    case '1':
+                        displayErr("The username/password was incorrect")
+                        return
+                        break
+                    case '2':
+                        displayErr("The password field is empty")
+                        return
+                        break
+                    case '3':
+                        displayErr("The username field is empty")
+                        return
+                        break
+                    case '4':
+                        displayErr("The username and password fields are empty")
+                        return
+                        break
+                    case '5':
+                        displayErr("That username is already in use")
+                        return
+                        break
+                    default:
+                        displayErr("An unknown error has occured")
+                        return
+                        break
+                }
+            }else{
+                location.href = '/admin/'
+            }
+        };
+        ws.onclose = function () {
+            console.log("ws connection has been closed");
+            setTimeout(function () {
+                start(websocketServerLocation)
+            }, 3000);
+        };
+    }
+</script>

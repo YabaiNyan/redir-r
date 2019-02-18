@@ -4,7 +4,7 @@ Shortlink Redirector
 # Todo list
 * Add Websockets rate limiting.
 * Write Admin Homepage
-* Fix Sqlite Busy Err
+* ~~Fix Sqlite Busy Err~~ Move to redis
 
 # Todo Done List
 * Standardize Error Codes
